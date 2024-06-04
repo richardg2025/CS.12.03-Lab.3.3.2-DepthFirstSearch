@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class DepthFirstSearch {
@@ -46,18 +47,34 @@ public class DepthFirstSearch {
     public static int[] depthFirstSearch(int[][] graph) {
 
         // Create a stack.
+        Stack<Integer> stack = new Stack<>();
 
         // Create an array called visited. This will keep track of which nodes we have visited.
+        ArrayList<Integer> visited = new ArrayList<>();
 
         // Create an array called path. This will keep track of the order of nodes that we visit.
+        ArrayList<Integer> path = new ArrayList<>();
 
         // Create an index for the path array.
+        int pathIndex = 0;
 
         // Push our starting node to the stack. We can begin our traversal from any valid node. Let's begin our traversal at node 0.
+        stack.push(0);
 
         // Record the starting node as visited.
+        visited.add(0);
 
         // While our stack is not empty i.e. while we still have nodes to explore ...
+        while (!stack.isEmpty()) {
+            int temp = stack.pop();
+            path.add(temp);
+            int[] neighbours = graph[temp];
+            for (int neighbour : neighbours) {
+                if (visited.contains(neighbour)) continue;
+                visited.add(neighbour);
+                stack.push(neighbour);
+            }
+        }
 
             // Pop the node that we are currently visiting from the stack.
 
@@ -73,11 +90,8 @@ public class DepthFirstSearch {
 
                     // Push the neighbouring/adjacent node onto the stack.
 
-
-
-
         // Return the path.
-        return null;
+        return path.stream().mapToInt(i -> i).toArray();
 
     }
 
